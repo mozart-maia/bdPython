@@ -48,6 +48,13 @@ class bancoDados():
         else:
             self.list.append([key,value])
             print("FALSE", 1)
+
+    def save(self):
+        with open("bdPython", "w") as file:
+            for key, value in self.entries.items():
+                file.write("{}:{}\n".format(key,value))
+
+
             
 
     def commit(self):
@@ -107,6 +114,8 @@ class Prompt():
                     banco.commit()
                 else:
                     print("No transaction opened yet")
+
+            banco.save()
 
             
 if __name__ == "__main__":
