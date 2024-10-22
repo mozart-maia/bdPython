@@ -1,85 +1,14 @@
-from typing import TypedDict
-
-class Entry():
-    def __init__(self, key:str, value:int):
-        self.key = key
-        self.value = value
-    
-    def getKey(self):
-        self.key
-
-    def getValue(self):
-        self.value
-
-
-class bancoDados():
-    def __init__(self):
-        self.entries = {}
-        self.openTransaction = False
-        self.list = []
-
-    def set(self, key, value):
-        self.entries[key] = value
-
-    def get(self, key):
-        try:
-            return self.entries[key]
-        except KeyError:
-            return None
-
-    def start_transaction(self):
-        self.openTransaction = True
-        self.list = []
-        print(1)
-
-    def rollback(self):
-        self.openTransaction = False
-        self.list = []
-
-    def isTransactionOpen(self):
-        return self.openTransaction
-
-    def add_to_transaction(self, key, value):
-        result = self.get(key)
-        if result:
-            self.list.append([key,value])
-            print("TRUE", 1)
-            
-        else:
-            self.list.append([key,value])
-            print("FALSE", 1)
-
-    def save(self):
-        with open("bdPython", "w") as file:
-            for key, value in self.entries.items():
-                file.write("{}:{}\n".format(key,value))
-
-
-            
-
-    def commit(self):
-        print(self.list)
-        for each in self.list:
-            self.set(each[0],each[1])
-
-        self.openTransaction = False
-        self.list = []
-
-    def print_trans(self):
-        print(self.list, self.isTransactionOpen())
-
-    def print(self,):
-        print(self.entries)
+import database as bd
 
 class Prompt():
     def __init__(self):
-        banco = bancoDados()
+        banco = bd.DataBase()
         while True:      
             banco.print()
             command = input("> ")
             print(command)
             commands =  command.split()
-            if commands[0] == "exit!":
+            if commands[0] == "exit":
                     break
             if commands[0] == "print":
                     banco.print_trans()
